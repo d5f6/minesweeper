@@ -1,0 +1,1 @@
+to run love2d from vscode on mac, type: cmd+l than o.
