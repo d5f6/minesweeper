@@ -8,6 +8,8 @@ require 'src/dependencies'
 
 function love.load()
   push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT)
+  
+  love.graphics.setFont(gFonts['pixeled'])
 end
 
 function love.keypressed(key)
@@ -21,6 +23,6 @@ end
 
 function love.draw()
   push:start()
-  love.graphics.print('hello')
+  love.graphics.print('000')
   push:finish()
 end
