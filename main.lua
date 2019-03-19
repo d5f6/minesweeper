@@ -6,6 +6,9 @@
 
 require 'src/dependencies'
 
+local leftOffset = (VIRTUAL_WIDTH - GRID_WIDTH * TILE_SIZE) / 2
+local topOffset = 40
+
 function love.load()
   push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT)
   
@@ -45,7 +48,7 @@ function love.draw()
       love.graphics.draw(grid[x][y] == 1 
         and gTextures['tile'] 
         or gTextures['tile-depressed'],
-        (x - 1) * TILE_SIZE, (y - 1) * TILE_SIZE)
+        leftOffset + (x - 1) * TILE_SIZE, topOffset + (y - 1) * TILE_SIZE)
     end
   end
 
