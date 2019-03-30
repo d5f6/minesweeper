@@ -4,6 +4,7 @@
 
 love.graphics.setDefaultFilter('nearest', 'nearest')
 
+Class = require 'lib/Class'
 push = require 'lib/push'
 
 require 'src/constants'

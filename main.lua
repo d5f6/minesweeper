@@ -5,9 +5,9 @@
 ]]
 
 require 'src/dependencies'
+require 'src/GameGrid'
 
-local leftOffset = (VIRTUAL_WIDTH - GRID_WIDTH * TILE_SIZE) / 2
-local topOffset = 40
+local gameGrid = GameGrid(GRID_WIDTH, GRID_HEIGHT)
 
 function love.load()
   push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT)
@@ -43,14 +43,7 @@ function love.draw()
   love.graphics.print('120')
   love.graphics.printf('0', 0, 0, VIRTUAL_WIDTH, 'right')
   
-  for y = 1, 10 do
-    for x = 1, 10 do
-      love.graphics.draw(grid[x][y] == 1 
-        and gTextures['tile'] 
-        or gTextures['tile-depressed'],
-        leftOffset + (x - 1) * TILE_SIZE, topOffset + (y - 1) * TILE_SIZE)
-    end
-  end
+  gameGrid:render()
 
   push:finish()
 end
