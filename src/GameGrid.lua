@@ -4,6 +4,8 @@
 
 GameGrid = Class{}
 
+local x, y
+
 function GameGrid:init(width, height)
   self.width = width
   self.height = height
@@ -15,13 +17,13 @@ function GameGrid:init(width, height)
     table.insert(self.grid, {})
 
     for x = 1, self.width do
-      local isBomb = math.random(2) == 1 and true or false
+      local isBomb = math.random(10) == 1 and true or false
       local gridTile = GridTile(isBomb)
 
       table.insert(self.grid[y], gridTile)
       
       local isHidden = math.random(2) == 1 and true or false
-      gridTile.isHidden = isHidden
+      gridTile.isHidden = true
     end
   end
 
@@ -98,6 +100,7 @@ function GameGrid:calculateNumbers()
 end
 
 function GameGrid:update(dt)
+  x, y = push:toGame(love.mouse.getPosition())
 end
 
 function GameGrid:render()
@@ -108,4 +111,6 @@ function GameGrid:render()
       )
     end
   end
+
+  love.graphics.print('X: ' .. tostring(x) .. 'Y: ' .. tostring(y), 0, VIRTUAL_HEIGHT - 48)
 end

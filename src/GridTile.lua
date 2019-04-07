@@ -15,9 +15,9 @@ function GridTile:update(dt)
 end
 
 function GridTile:render(x, y)
-  --if self.isHidden then
-    --love.graphics.draw(gTextures['tile'], x, y)
-  --else
+  if self.isHidden then
+    love.graphics.draw(gTextures['tile'], x, y)
+  else
     if self.isBomb then
       love.graphics.draw(gTextures['bomb'], x, y)
     else
@@ -27,5 +27,5 @@ function GridTile:render(x, y)
         love.graphics.draw(gTextures['tile-depressed'], x, y)
       end
     end
-  --end
+  end
 end
