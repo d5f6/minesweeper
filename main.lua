@@ -6,6 +6,7 @@
 
 require 'src/dependencies'
 require 'src/GameGrid'
+require 'src/GridTile'
 
 local gameGrid = GameGrid(GRID_WIDTH, GRID_HEIGHT)
 

@@ -1,1 +1,3 @@
-to run love2d from vscode on mac, type: cmd+l than o.
+to run love2d from vscode on my mac, type: cmd+l than o.
+
+to run love2d from vscode on windows, type: alt+l than o.
