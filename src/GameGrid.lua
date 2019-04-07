@@ -24,6 +24,74 @@ function GameGrid:init(width, height)
       gridTile.isHidden = isHidden
     end
   end
+
+  self:calculateNumbers()
+end
+
+function GameGrid:calculateNumbers()
+  for y = 1, self.height do
+    for x = 1, self.width do
+      local numBombNeighbors = 0
+
+      -- check top left
+      if x > 1 and y > 1 then
+        if self.grid[y - 1][x - 1].isBomb then
+          numBombNeighbors = numBombNeighbors + 1
+        end
+      end
+
+      -- check top
+      if y > 1 then
+        if self.grid[y - 1][x].isBomb then
+          numBombNeighbors = numBombNeighbors + 1
+        end
+      end
+
+      -- check top right
+      if y > 1 and x < self.width then
+        if self.grid[y - 1][x + 1].isBomb then
+          numBombNeighbors = numBombNeighbors + 1
+        end
+      end
+
+      -- check left
+      if x > 1 then
+         if self.grid[y][x - 1].isBomb then
+          numBombNeighbors = numBombNeighbors + 1
+        end
+      end
+
+      -- check right
+      if x < self.width then
+         if self.grid[y][x + 1].isBomb then
+          numBombNeighbors = numBombNeighbors + 1
+        end
+      end
+
+      -- check bottom left
+      if x > 1 and y < self.height then
+        if self.grid[y + 1][x - 1].isBomb then
+          numBombNeighbors = numBombNeighbors + 1
+        end
+      end
+
+      -- check bottom
+      if y < self.height then
+        if self.grid[y + 1][x].isBomb then
+          numBombNeighbors = numBombNeighbors + 1
+        end
+      end
+
+      -- check bottom right
+      if y < self.height and x < self.width then
+        if self.grid[y + 1][x + 1].isBomb then
+          numBombNeighbors = numBombNeighbors + 1
+        end
+      end
+
+      self.grid[y][x].numBombNeighbors = numBombNeighbors
+    end
+  end
 end
 
 function GameGrid:update(dt)
