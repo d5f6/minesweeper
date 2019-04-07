@@ -15,12 +15,12 @@ function GameGrid:init(width, height)
     table.insert(self.grid, {})
 
     for x = 1, self.width do
-      local isBomb = math.random(2) and true or false
+      local isBomb = math.random(2) == 1 and true or false
       local gridTile = GridTile(isBomb)
 
       table.insert(self.grid[y], gridTile)
       
-      local isHidden = math.random(2) and true or false
+      local isHidden = math.random(2) == 1 and true or false
       gridTile.isHidden = isHidden
     end
   end
@@ -30,13 +30,11 @@ function GameGrid:update(dt)
 end
 
 function GameGrid:render()
-  
   for y = 1, self.height do
     for x = 1, self.width do
-      love.graphics.draw(grid[x][y] == 1 
-        and gTextures['tile'] 
-        or gTextures['tile-depressed'],
-        self.leftOffset + (x - 1) * TILE_SIZE, TOP_OFFSET + (y - 1) * TILE_SIZE)
+      self.grid[x][y]:render(
+        self.leftOffset + (x - 1) * TILE_SIZE, TOP_OFFSET + (y - 1) * TILE_SIZE
+      )
     end
   end
 end

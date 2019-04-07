@@ -4,9 +4,9 @@
 
 GridTile = Class{}
 
-function GridTile:init(isBomb)
+function GridTile:init(isBomb, isHidden)
   self.isBomb = isBomb
-  self.isHidden = true
+  self.isHidden = isHidden
   self.numBombNeighbors = 0
 end
 
