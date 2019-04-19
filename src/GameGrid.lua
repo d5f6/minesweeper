@@ -4,7 +4,7 @@
 
 GameGrid = Class{}
 
-local x, y
+local xPos, yPos
 
 function GameGrid:init(width, height)
   self.width = width
@@ -12,6 +12,8 @@ function GameGrid:init(width, height)
   self.leftOffset = (VIRTUAL_WIDTH - self.width * TILE_SIZE) / 2
 
   self.grid = {}
+
+  self.isHighlighting = false
 
   for y = 1, self.height do
     table.insert(self.grid, {})
@@ -100,7 +102,28 @@ function GameGrid:calculateNumbers()
 end
 
 function GameGrid:update(dt)
-  x, y = push:toGame(love.mouse.getPosition())
+  xPos, yPos = push:toGame(love.mouse.getPosition())
+
+  local highlightingSomething = false
+
+  for y = 1, self.height do
+    for x = 1, self.width do
+      local tile = self.grid[y][x]
+
+      if xPos >= self.leftOffset + (x - 1) * TILE_SIZE and xPos <= self.leftOffset + (x - 1) * TILE_SIZE + TILE_SIZE then
+        if yPos >= TOP_OFFSET + (y - 1) * TILE_SIZE and yPos <= TOP_OFFSET + (y - 1) * TILE_SIZE + TILE_SIZE then
+          self.isHighlighting = true
+          self.highlightingTile = {x = x, y = y}
+          highlightingSomething = true
+        end
+      end
+    end
+  end
+
+  if not highlightingSomething then
+    self.isHighlighting = false
+  end
+
 end
 
 function GameGrid:render()
@@ -112,5 +135,15 @@ function GameGrid:render()
     end
   end
 
-  love.graphics.print('X: ' .. tostring(x) .. 'Y: ' .. tostring(y), 0, VIRTUAL_HEIGHT - 48)
+  if self.isHighlighting then
+    love.graphics.setColor(1, 1, 1, 0.4)
+    love.graphics.rectangle('fill', 
+      self.leftOffset + (self.highlightingTile.x - 1) * TILE_SIZE, 
+      TOP_OFFSET + (self.highlightingTile.y - 1) * TILE_SIZE, 
+      TILE_SIZE, TILE_SIZE
+    )
+    love.graphics.setColor(1, 1, 1, 1)
+  end
+
+  love.graphics.print('X: ' .. tostring(xPos) .. 'Y: ' .. tostring(yPos), 0, VIRTUAL_HEIGHT - 48)
 end
