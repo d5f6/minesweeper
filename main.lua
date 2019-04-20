@@ -26,6 +26,16 @@ function love.load()
   end
 
   love.graphics.setFont(gFonts['start'])
+
+  love.mouse.buttonsPressed = {}
+end
+
+function love.mouse.wasPressed(button)
+  return love.mouse.buttonsPressed[button]
+end
+
+function love.mousepressed(x, y, button, istouch, pressed)
+  love.mouse.buttonsPressed[button] = true
 end
 
 function love.keypressed(key)
@@ -36,6 +46,8 @@ end
 
 function love.update(dt)
   gameGrid:update(dt)
+
+  love.mouse.buttonsPressed = {}
 end
 
 function love.draw()

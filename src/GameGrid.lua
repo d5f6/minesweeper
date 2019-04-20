@@ -110,10 +110,15 @@ function GameGrid:update(dt)
     for x = 1, self.width do
       local tile = self.grid[y][x]
 
-      if xPos >= self.leftOffset + (x - 1) * TILE_SIZE and xPos <= self.leftOffset + (x - 1) * TILE_SIZE + TILE_SIZE then
+       if xPos >= self.leftOffset + (x - 1) * TILE_SIZE and xPos <= self.leftOffset + (x - 1) * TILE_SIZE + TILE_SIZE then
         if yPos >= TOP_OFFSET + (y - 1) * TILE_SIZE and yPos <= TOP_OFFSET + (y - 1) * TILE_SIZE + TILE_SIZE then
           self.isHighlighting = true
           self.highlightingTile = {x = x, y = y}
+          
+          if love.mouse.wasPressed(1) then
+            self:revealTile(x, y)
+          end
+
           highlightingSomething = true
         end
       end
@@ -123,13 +128,41 @@ function GameGrid:update(dt)
   if not highlightingSomething then
     self.isHighlighting = false
   end
+end
 
+function GameGrid:revealTile(x, y)
+  local tile = self.grid[y][x]
+
+  if tile.isBomb or not tile.isHidden then return end
+
+  tile.isHidden = false
+
+  -- don't recurse if this is a number tile
+  if tile.numBombNeighbors == 0 then
+      
+    -- top tile
+    if y > 1 then
+      self:revealTile(x, y - 1)
+    end
+    -- bottom tile
+    if y < GRID_HEIGHT then
+      self:revealTile(x, y + 1)
+    end
+    -- left tile
+    if x > 1 then
+      self:revealTile(x - 1, y)
+    end
+    -- right tile
+    if x < GRID_WIDTH then
+      self:revealTile(x + 1, y)
+    end
+  end
 end
 
 function GameGrid:render()
   for y = 1, self.height do
     for x = 1, self.width do
-      self.grid[x][y]:render(
+      self.grid[y][x]:render(
         self.leftOffset + (x - 1) * TILE_SIZE, TOP_OFFSET + (y - 1) * TILE_SIZE
       )
     end
