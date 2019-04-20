@@ -17,6 +17,6 @@ function PlayState:render()
   love.graphics.clear(0.2, 0.2, 0.2, 1)
   love.graphics.print('120')
   love.graphics.printf('0', 0, 0, VIRTUAL_WIDTH, 'right')
-  
+
   self.gameGrid:render()
 end
