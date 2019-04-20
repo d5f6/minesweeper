@@ -5,15 +5,14 @@
 ]]
 
 require 'src/dependencies'
-require 'src/GameGrid'
-require 'src/GridTile'
+
+math.randomseed(os.time())
 
 local gameGrid = GameGrid(GRID_WIDTH, GRID_HEIGHT)
 
 function love.load()
   push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT)
-  
-  math.randomseed(os.time())
+  love.window.setTitle('Minesweeper d5f6')
 
   grid = {}
 
@@ -26,6 +25,15 @@ function love.load()
   end
 
   love.graphics.setFont(gFonts['start'])
+
+  gStateMachine = StateMachine {
+    ['title']     = function() return TitleState() end,
+    ['play']      = function() return PlatState() end,
+    ['victory']   = function() return VictoryState() end,
+    ['game-over'] = function() return GameOverState() end
+  }
+
+  gStateMachine:change('title')
 
   love.mouse.buttonsPressed = {}
 end

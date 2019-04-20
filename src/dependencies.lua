@@ -8,6 +8,15 @@ Class = require 'lib/class'
 push = require 'lib/push'
 
 require 'src/constants'
+require 'src/GameGrid'
+require 'src/GridTile'
+require 'src/StateMachine'
+
+require 'src/states/BaseState'
+require 'src/states/PlayState'
+require 'src/states/GameOverState'
+require 'src/states/TitleState'
+require 'src/states/VictoryState'
 
 gTextures = {
   ['tile'] = love.graphics.newImage('graphics/tile.png'),

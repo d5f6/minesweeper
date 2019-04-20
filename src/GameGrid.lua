@@ -116,6 +116,10 @@ function GameGrid:update(dt)
           self.highlightingTile = {x = x, y = y}
           
           if love.mouse.wasPressed(1) then
+            if self.grid[y][x].isBomb then
+              self.grid[y][x].isHidden = false
+            end
+
             self:revealTile(x, y)
           end
 
@@ -144,14 +148,17 @@ function GameGrid:revealTile(x, y)
     if y > 1 then
       self:revealTile(x, y - 1)
     end
+    
     -- bottom tile
     if y < GRID_HEIGHT then
       self:revealTile(x, y + 1)
     end
+
     -- left tile
     if x > 1 then
       self:revealTile(x - 1, y)
     end
+    
     -- right tile
     if x < GRID_WIDTH then
       self:revealTile(x + 1, y)
