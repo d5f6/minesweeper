@@ -117,6 +117,7 @@ function GameGrid:update(dt)
           
           if love.mouse.wasPressed(1) then
             if self.grid[y][x].isBomb then
+              gStateMachine:change('game-over')
               self.grid[y][x].isHidden = false
             end
 
