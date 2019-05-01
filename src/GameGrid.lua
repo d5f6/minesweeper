@@ -208,6 +208,4 @@ function GameGrid:render()
     )
     love.graphics.setColor(1, 1, 1, 1)
   end
-
-  love.graphics.print('X: ' .. tostring(xPos) .. 'Y: ' .. tostring(yPos), 0, VIRTUAL_HEIGHT - 48)
 end
