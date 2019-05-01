@@ -10,7 +10,14 @@ function GameOverState:update(dt)
   end
 end
 
+function GameOverState:enter(params)
+  self.gameGrid = params.gameGrid
+end
+
 function GameOverState:render()
-  love.graphics.printf('Game Over', 0, VIRTUAL_HEIGHT / 2 - 8, VIRTUAL_WIDTH, 'center')
-  love.graphics.printf('Press Enter to play', 0, VIRTUAL_HEIGHT / 2 + 16, VIRTUAL_WIDTH, 'center')
+  love.graphics.clear(0.4, 0, 0, 1)
+  self.gameGrid:render()
+  self.gameGrid:revealAll()
+  love.graphics.printf('Game Over', 0, 16, VIRTUAL_WIDTH, 'center')
+  love.graphics.printf('Press Enter to play', 0, VIRTUAL_HEIGHT - 32, VIRTUAL_WIDTH, 'center')
 end
