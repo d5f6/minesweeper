@@ -32,6 +32,27 @@ function GameGrid:init(width, height)
   self:calculateNumbers()
 end
 
+function GameGrid:revealAll()
+  for y = 1, self.height do
+    for x = 1, self.width do
+      self.grid[y][x].isHidden = false
+    end
+  end
+end
+
+function GameGrid:isVictory()
+  local won = true
+
+  for y = 1, self.height do
+    for x = 1, self.width do
+      if self.grid[y][x].isHidden and not self.grid[y][x].isBomb then
+        won = false
+      end
+    end
+  end
+  return won
+end
+
 function GameGrid:calculateNumbers()
   for y = 1, self.height do
     for x = 1, self.width do
@@ -119,6 +140,8 @@ function GameGrid:update(dt)
             if self.grid[y][x].isBomb then
               gStateMachine:change('game-over')
               self.grid[y][x].isHidden = false
+            elseif self:isVictory() then
+              gStateMachine:change('victory')
             end
 
             self:revealTile(x, y)
