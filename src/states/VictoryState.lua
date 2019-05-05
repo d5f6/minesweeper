@@ -4,6 +4,10 @@
 
 VictoryState = Class{__includes = BaseState}
 
+function VictoryState:init()
+  Timer.clear()
+end
+
 function VictoryState:update(dt) 
   if love.keyboard.wasPressed('enter') or love.keyboard.wasPressed('return') then
     gStateMachine:change('play')
