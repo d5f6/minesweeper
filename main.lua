@@ -49,6 +49,7 @@ function love.keypressed(key)
 end
 
 function love.update(dt)
+  Timer.update(dt)
   gStateMachine:update(dt)
 
   love.mouse.buttonsPressed = {}

@@ -12,6 +12,7 @@ function GameGrid:init(width, height)
   self.leftOffset = (VIRTUAL_WIDTH - self.width * TILE_SIZE) / 2
 
   self.grid = {}
+  self.score = 0
 
   self.isHighlighting = false
 
@@ -30,8 +31,7 @@ function GameGrid:init(width, height)
   end
 
   self:calculateNumbers()
-  self:revealAll()
-end
+  end
 
 function GameGrid:revealAll()
   for y = 1, self.height do
@@ -134,10 +134,16 @@ function GameGrid:update(dt)
 
        if xPos >= self.leftOffset + (x - 1) * TILE_SIZE and xPos <= self.leftOffset + (x - 1) * TILE_SIZE + TILE_SIZE then
         if yPos >= TOP_OFFSET + (y - 1) * TILE_SIZE and yPos <= TOP_OFFSET + (y - 1) * TILE_SIZE + TILE_SIZE then
-          self.isHighlighting = true
+          
+          if self.grid[y][x].isHidden then
+            self.isHighlighting = true
+          else
+            self.isHighlighting = false
+          end
+          
           self.highlightingTile = {x = x, y = y}
           
-          if love.mouse.wasPressed(1) then
+          if love.mouse.wasPressed(1) and not self.grid[y][x].isFlagged then
             if self.grid[y][x].isBomb then
               self.grid[y][x].isHidden = false
               gStateMachine:change('game-over', {
@@ -150,6 +156,8 @@ function GameGrid:update(dt)
             end
 
             self:revealTile(x, y)
+            elseif love.mouse.wasPressed(2) and self.grid[y][x].isHidden then
+              self.grid[y][x].isFlagged = not self.grid[y][x].isFlagged
           end
 
           highlightingSomething = true
@@ -169,6 +177,8 @@ function GameGrid:revealTile(x, y)
   if tile.isBomb or not tile.isHidden then return end
 
   tile.isHidden = false
+  tile.isFlagged = false
+  self.score = self.score + 5
 
   -- don't recurse if this is a number tile
   if tile.numBombNeighbors == 0 then

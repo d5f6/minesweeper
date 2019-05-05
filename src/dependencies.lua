@@ -6,6 +6,7 @@ love.graphics.setDefaultFilter('nearest', 'nearest')
 
 Class = require 'lib/class'
 push = require 'lib/push'
+Timer = require 'lib/knife.timer'
 
 require 'src/constants'
 require 'src/GameGrid'
