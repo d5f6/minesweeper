@@ -149,13 +149,16 @@ function GameGrid:update(dt)
               gStateMachine:change('game-over', {
                 gameGrid = self
               })
-            elseif self:isVictory() then
+            end
+            
+            self:revealTile(x, y)
+            
+            if self:isVictory() then
               gStateMachine:change('victory', {
                 gameGrid = self
               })
             end
 
-            self:revealTile(x, y)
             elseif love.mouse.wasPressed(2) and self.grid[y][x].isHidden then
               self.grid[y][x].isFlagged = not self.grid[y][x].isFlagged
           end
